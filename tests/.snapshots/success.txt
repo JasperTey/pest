@@ -1,6 +1,6 @@
 
-   PASS  Tests\Arch
-  ✓ globals
+   FAIL  Tests\Arch
+  ⨯ globals
   ✓ dependencies
   ✓ contracts
 
@@ -990,11 +990,14 @@
   ✓ collision with ([''])
   ✓ collision with (['--parallel'])
 
+   PASS  Tests\Visual\DatasetWithErrors
+  ✓ dataset runtime errors will not be suppressed
+
    PASS  Tests\Visual\Help
   ✓ visual snapshot of help command output
 
-   PASS  Tests\Visual\Parallel
-  ✓ parallel
+   FAIL  Tests\Visual\Parallel
+  ⨯ parallel
   ✓ a parallel test can extend another test with same name
 
    PASS  Tests\Visual\SingleTestOrDirectory
@@ -1015,5 +1018,106 @@
 
    PASS  Tests\Visual\Version
   ✓ visual snapshot of help command output
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Arch > globals                ArchExpectationFailedException   
+  Expecting 'dump' not to be used on 'Pest\Kernel'.
 
-  Tests:    2 deprecated, 3 warnings, 4 incomplete, 1 notice, 4 todos, 14 skipped, 709 passed (1717 assertions)
+  at src/Kernel.php:105
+    101▕                 '   ERROR  PHPUnit triggered errors.',
+    102▕                 '',
+    103▕             ]);
+    104▕             
+  ➜ 105▕             dump($result->testTriggeredPhpunitErrorEvents());
+    106▕         }
+    107▕ 
+    108▕         return CallsAddsOutput::execute(
+    109▕             Result::exitCode($configuration, $result),
+
+  1   src/Kernel.php:105
+  2   src/Factories/TestCaseMethodFactory.php:98
+
+  ────────────────────────────────────────────────────────────────────────────  
+   FAILED  Tests\Visual\Parallel > parallel                                     
+  Expected: \n
+    ...........s................................................................\n
+    ..........................................t..........!!.....................\n
+  ... (36 more lines)
+
+  To contain: Tests:    2 deprecated, 3 warnings, 4 incomplete, 1 notice, 4 todos, 11 skipped, 697 passed (1702 assertions)
+
+  at src/Mixins/Expectation.php:181
+    177▕     {
+    178▕         foreach ($needles as $needle) {
+    179▕             if (is_string($this->value)) {
+    180▕                 // @phpstan-ignore-next-line
+  ➜ 181▕                 Assert::assertStringContainsString((string) $needle, $this->value);
+    182▕             } else {
+    183▕                 if (! is_iterable($this->value)) {
+    184▕                     InvalidExpectationValue::expected('iterable');
+    185▕                 }
+
+  1   src/Mixins/Expectation.php:181
+  2   src/Support/ExpectationPipeline.php:75
+
+
+  Tests:    2 deprecated, 2 failed, 3 warnings, 4 incomplete, 1 notice, 4 todos, 14 skipped, 708 passed (1716 assertions)
+  Duration: 4.69s
+
+
+   ERROR  PHPUnit triggered errors.
+
+array:1 [
+  "P\Tests\Fixtures\DatasetWithErrors\ExampleTest::__pest_evaluable_it_will_not_be_suppressed" => array:1 [
+    0 => PHPUnit\Event\Test\PhpunitErrorTriggered {#12867
+      -telemetryInfo: PHPUnit\Event\Telemetry\Info {#12865
+        -current: PHPUnit\Event\Telemetry\Snapshot {#12868
+          -time: PHPUnit\Event\Telemetry\HRTime {#12869
+            -seconds: 1188809
+            -nanoseconds: 498400083
+          }
+          -memoryUsage: PHPUnit\Event\Telemetry\MemoryUsage {#12870
+            -bytes: 20971520
+          }
+          -peakMemoryUsage: PHPUnit\Event\Telemetry\MemoryUsage {#12876
+            -bytes: 20971520
+          }
+        }
+        -durationSinceStart: PHPUnit\Event\Telemetry\Duration {#12864
+          -seconds: 0
+          -nanoseconds: 66424667
+        }
+        -memorySinceStart: PHPUnit\Event\Telemetry\MemoryUsage {#12863
+          -bytes: 16777216
+        }
+        -durationSincePrevious: PHPUnit\Event\Telemetry\Duration {#12862
+          -seconds: 0
+          -nanoseconds: 2133750
+        }
+        -memorySincePrevious: PHPUnit\Event\Telemetry\MemoryUsage {#12861
+          -bytes: 0
+        }
+      }
+      -test: PHPUnit\Event\Code\TestMethod {#12885
+        -file: "/Users/jasper/Dev/projects/pest/src/Factories/TestCaseFactory.php(196) : eval()'d code"
+        -className: "P\Tests\Fixtures\DatasetWithErrors\ExampleTest"
+        -methodName: "__pest_evaluable_it_will_not_be_suppressed"
+        -line: 23
+        -testDox: PHPUnit\Event\Code\TestDox {#12877
+          -prettifiedClassName: "/Users/jasper/Dev/projects/pest/tests/Fixtures/DatasetWithErrors/ExampleTest.php"
+          -prettifiedMethodName: "pest evaluable it will not be suppressed"
+          -prettifiedAndColorizedMethodName: "pest evaluable it will not be suppressed"
+        }
+        -metadata: PHPUnit\Metadata\MetadataCollection {#12879
+          -metadata: []
+        }
+        -testData: PHPUnit\Event\TestData\TestDataCollection {#12873
+          -data: []
+          -fromDataProvider: null
+        }
+      }
+      -message: """
+        The data provider specified for P\Tests\Fixtures\DatasetWithErrors\ExampleTest::__pest_evaluable_it_will_not_be_suppressed is invalid\n
+        error\n
+        /Users/jasper/Dev/projects/pest/src/Kernel.php:86\n
+        """
+    }

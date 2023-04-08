@@ -95,6 +95,16 @@ final class Kernel
         $configuration = Registry::get();
         $result = Facade::result();
 
+        if ($result->hasTestTriggeredPhpunitErrorEvents()) {
+            $this->output->writeln([
+                '',
+                '  <fg=white;options=bold;bg=red> ERROR </> PHPUnit triggered errors.',
+                '',
+            ]);
+
+            dump($result->testTriggeredPhpunitErrorEvents());
+        }
+
         return CallsAddsOutput::execute(
             Result::exitCode($configuration, $result),
         );
